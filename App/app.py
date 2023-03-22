@@ -87,7 +87,7 @@ def classify():
             ]
 
             if len(text_new) <= 5:
-                result = 'Bad Quality'
+                result = {'result': 'Bad Quality'}
             else:
                 # Transform the X_test with TF-IDF vectorizer
                 ser = pd.Series(' '.join(text_new))
@@ -96,12 +96,12 @@ def classify():
                 # Use the trained model to make predictions on the testing set
                 y_pred_tfidf_svm = svm.predict(x_test_tfidf)
 
-                result = y_pred_tfidf_svm[0]
+                result = {'result': y_pred_tfidf_svm[0]}
 
         else:
-            result = 'Website not valid'
+            result = {'result': 'Website not valid'}
     else:
-        result = 'Website not valid'
+        result = {'result': 'Website not valid'}
     return result
 
 
