@@ -1,7 +1,6 @@
 import gensim.downloader as api
 import numpy as np
 import pandas as pd
-from gensim.models.word2vec import Word2Vec
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
@@ -38,14 +37,8 @@ acc_glo_svm = 0
 acc_glo_for = 0
 
 # Get the data
-initial_training = pd.read_excel(
-    r"C:\Users\Lumitos\OneDrive - IU International University of Applied Sciences\IUBH учеба\Thesis\Data "
-    r"Sets\KNN\Final versions\Training_scrapped_with_industry.xlsx "
-)
-initial_test = pd.read_excel(
-    r"C:\Users\Lumitos\OneDrive - IU International University of Applied Sciences\IUBH учеба\Thesis\Data "
-    r"Sets\KNN\Final versions\Test_scrapped_with_industry.xlsx "
-)
+initial_training = pd.read_excel(r"data\Training_scrapped_with_industry.xlsx")
+initial_test = pd.read_excel(r"data\Test_scrapped_with_industry.xlsx")
 
 initial_training['Content'] = initial_training['Content'].astype('str')
 initial_training['Content'] = initial_training['Content'].apply(
@@ -59,7 +52,20 @@ initial_test['Content'] = initial_test['Content'].apply(lambda x: ' ' + x)
 
 test = initial_test[['Full_URL', 'Content', 'Industry']]
 
-stop_words = set(stopwords.words('english'))
+# ---------------------------------
+# ----------Stop words-------------
+# ---------------------------------
+
+# Download the standard stopwords
+stop_words = stopwords.words('english')
+
+# Get the created stop words list
+stop = pd.read_excel(r"data\STOP_WORDS.xlsx")
+
+# Join the two lists and eliminate the duplicates
+stop_words = set(stop_words + stop['Words'].tolist())
+
+# Create a word lemmatizer instance for pre-processing the texts
 wordnet_lemmatizer = WordNetLemmatizer()
 
 training['lists'] = training['Content'].apply(lambda t: [
@@ -195,7 +201,6 @@ for index, row in test.iterrows():
     # ---------------------------------
 
     # Define a function to generate embeddings for each document
-
 
     def generate_doc_embedding(doc):
         words = doc.split()
@@ -342,22 +347,23 @@ for index, row in test.iterrows():
     acc_glo_for += accuracy
 
     df.loc[len(df)] = [
-        url, industry, y_pred_bow_knn[0], y_pred_bow_svm[0], y_pred_bow_forest[0], y_pred_tfidf_knn[0], y_pred_tfidf_svm[0],
+        url, industry, y_pred_bow_knn[0], y_pred_bow_svm[0], y_pred_bow_forest[0], y_pred_tfidf_knn[0],
+        y_pred_tfidf_svm[0],
         y_pred_tfidf_forest[0], y_pred_word2vec_knn[0], y_pred_word2vec_svm[0], y_pred_word2vec_forest[0],
         y_pred_glove_knn[0], y_pred_glove_svm[0], y_pred_glove_forest[0]
     ]
     print(url, 'done')
 
-# df.to_excel(r"C:\Users\Lumitos\Desktop\Predictions.xlsx")
-print('The accuracy of BOW-KNN is:', round((acc_bow_knn/len(df))*100, 2))
-print('The accuracy of BOW-SVM is:', round((acc_bow_svm/len(df))*100, 2))
-print('The accuracy of BOW-Forest is:', round((acc_bow_for/len(df))*100, 2))
-print('The accuracy of TFIDF-KNN is:', round((acc_tfidf_knn/len(df))*100, 2))
-print('The accuracy of TFIDF-SVM is:', round((acc_tfidf_svm/len(df))*100, 2))
-print('The accuracy of TFIDF-Forest is:', round((acc_tfidf_for/len(df))*100, 2))
-print('The accuracy of W2V-KNN is:', round((acc_w2v_knn/len(df))*100, 2))
-print('The accuracy of W2V-SVM is:', round((acc_w2v_svm/len(df))*100, 2))
-print('The accuracy of W2V-Forest is:', round((acc_w2v_for/len(df))*100, 2))
-print('The accuracy of GloVe-KNN is:', round((acc_glo_knn/len(df))*100, 2))
-print('The accuracy of GloVe-SVM is:', round((acc_glo_svm/len(df))*100, 2))
-print('The accuracy of GloVe-Forest is:', round((acc_glo_for/len(df))*100, 2))
+# df.to_excel(r"data\predictions_all_models.xlsx")
+print('The accuracy of BOW-KNN is:', round((acc_bow_knn / len(df)) * 100, 2))
+print('The accuracy of BOW-SVM is:', round((acc_bow_svm / len(df)) * 100, 2))
+print('The accuracy of BOW-Forest is:', round((acc_bow_for / len(df)) * 100, 2))
+print('The accuracy of TFIDF-KNN is:', round((acc_tfidf_knn / len(df)) * 100, 2))
+print('The accuracy of TFIDF-SVM is:', round((acc_tfidf_svm / len(df)) * 100, 2))
+print('The accuracy of TFIDF-Forest is:', round((acc_tfidf_for / len(df)) * 100, 2))
+print('The accuracy of W2V-KNN is:', round((acc_w2v_knn / len(df)) * 100, 2))
+print('The accuracy of W2V-SVM is:', round((acc_w2v_svm / len(df)) * 100, 2))
+print('The accuracy of W2V-Forest is:', round((acc_w2v_for / len(df)) * 100, 2))
+print('The accuracy of GloVe-KNN is:', round((acc_glo_knn / len(df)) * 100, 2))
+print('The accuracy of GloVe-SVM is:', round((acc_glo_svm / len(df)) * 100, 2))
+print('The accuracy of GloVe-Forest is:', round((acc_glo_for / len(df)) * 100, 2))

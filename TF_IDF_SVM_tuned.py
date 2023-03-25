@@ -3,12 +3,10 @@ from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics import accuracy_score
 from sklearn.svm import SVC
 import warnings
 import time
-import pickle
-from joblib import dump, load
+from joblib import dump
 
 
 # Ignore the warnings
@@ -22,10 +20,7 @@ warnings.filterwarnings("ignore")
 stop_words = stopwords.words('english')
 
 # Get the created stop words list
-stop = pd.read_excel(
-    r"C:\Users\Lumitos\OneDrive - IU International University of Applied Sciences\IUBH учеба\Thesis\Data "
-    r"Sets\STOP_WORDS.xlsx "
-)
+stop = pd.read_excel(r"data\STOP_WORDS.xlsx")
 
 # Join the two lists and eliminate the duplicates
 stop_words = set(stop_words + stop['Words'].tolist())
@@ -37,9 +32,7 @@ wordnet_lemmatizer = WordNetLemmatizer()
 # ------Get the training set-------
 # ---------------------------------
 
-initial_training = pd.read_excel(
-    r"C:\Users\Lumitos\OneDrive - IU International University of Applied Sciences\IUBH учеба\Thesis\Data "
-    r"Sets\KNN\Final versions\Training_scrapped_with_industry.xlsx ")
+initial_training = pd.read_excel(r"data\Training_scrapped_with_industry.xlsx")
 
 # ---------------------------------
 # -----Pre-processing the sets-----
@@ -94,8 +87,8 @@ X_train_tfidf = vectorizer.fit_transform(X_train)
 svm.fit(X_train_tfidf, y_train)
 
 # Save the model & vectorizer
-dump(svm, 'model.joblib')
-dump(vectorizer, 'vectorizer.joblib')
+dump(svm, r"model\model.joblib")
+dump(vectorizer, r"model\vectorizer.joblib")
 
 end_time_prep = time.time()
 

@@ -17,10 +17,7 @@ warnings.filterwarnings("ignore")
 wordnet_lemmatizer = WordNetLemmatizer()
 translator = Translator()
 
-stop = pd.read_excel(
-    r"C:\Users\Lumitos\OneDrive - IU International University of Applied Sciences\IUBH учеба\Thesis\Data "
-    r"Sets\STOP_WORDS.xlsx "
-)
+stop = pd.read_excel(r"data\STOP_WORDS.xlsx")
 stop_words = stopwords.words('english')
 stop_words = set(stop_words + stop['Words'].tolist())
 
@@ -28,13 +25,13 @@ stop_words = set(stop_words + stop['Words'].tolist())
 # ----Load the model from disk-----
 # ---------------------------------
 
-svm = load('model.joblib')
+svm = load(r"model\model.joblib")
 
 # ---------------------------------
 # ----Load TF-IDF vectorizer-------
 # ---------------------------------
 
-vectorizer = load('vectorizer.joblib')
+vectorizer = load(r"model\vectorizer.joblib")
 
 # Create a Flask app
 app = Flask(__name__)

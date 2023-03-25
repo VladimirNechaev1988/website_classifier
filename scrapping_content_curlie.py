@@ -67,13 +67,12 @@ def scrapper(url):
         df.loc[len(df)] = [
             url, domain, text, lang
         ]
-        df.to_excel(r"C:\Users\Lumitos\Desktop\Table_curlie_test.xlsx")
+        # Save the results of the test set (alternate with train)
+        df.to_excel(r"data\Table_curlie_test.xlsx")
 
 
-data = pd.read_excel(
-    r"C:\Users\Lumitos\OneDrive - IU International University of Applied Sciences\IUBH учеба\Thesis\Data "
-    r"Sets\KNN\Test_set.xlsx",
-)
+# Open the test URLs (alternate with train)
+data = pd.read_excel(r"data\Test_set_from_Curlie.xlsx")
 
 for index, row in data[['URL']].iterrows():
     scrapper(row.squeeze())
