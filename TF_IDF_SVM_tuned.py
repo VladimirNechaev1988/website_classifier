@@ -20,7 +20,7 @@ warnings.filterwarnings("ignore")
 stop_words = stopwords.words('english')
 
 # Get the created stop words list
-stop = pd.read_excel(r"data\STOP_WORDS.xlsx")
+stop = pd.read_excel(r"data\stop_words.xlsx")
 
 # Join the two lists and eliminate the duplicates
 stop_words = set(stop_words + stop['Words'].tolist())
@@ -32,7 +32,7 @@ wordnet_lemmatizer = WordNetLemmatizer()
 # ------Get the training set-------
 # ---------------------------------
 
-initial_training = pd.read_excel(r"data\Training_scrapped_with_industry.xlsx")
+initial_training = pd.read_excel(r"data\training_scrapped_final.xlsx")
 
 # ---------------------------------
 # -----Pre-processing the sets-----

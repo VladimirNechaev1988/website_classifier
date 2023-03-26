@@ -2,18 +2,16 @@ import pandas as pd
 import requests
 from requests.exceptions import ConnectionError, Timeout, ContentDecodingError, InvalidURL, ConnectTimeout, \
     TooManyRedirects, SSLError
-
 from bs4 import BeautifulSoup
 from langdetect import detect, LangDetectException
-from csv import reader
 import re
 import warnings
 from googletrans import Translator
-from nltk.corpus import stopwords
 from tldextract import extract
 
 warnings.filterwarnings("ignore")
 translator = Translator()
+valid=''
 
 df = pd.DataFrame(columns=['Full_URL', 'Domain', 'Content', 'Language'])
 
@@ -68,11 +66,14 @@ def scrapper(url):
             url, domain, text, lang
         ]
         # Save the results of the test set (alternate with train)
-        df.to_excel(r"data\Table_curlie_test.xlsx")
+        # df.to_excel(r"data\test_scrapped_init.xlsx")
+        # df.to_excel(r"data\training_scrapped_init.xlsx")
 
 
 # Open the test URLs (alternate with train)
-data = pd.read_excel(r"data\Test_set_from_Curlie.xlsx")
+data = pd.read_excel(r"data\URL_test.xlsx")
+# data = pd.read_excel(r"data\URL_training.xlsx")
+
 
 for index, row in data[['URL']].iterrows():
     scrapper(row.squeeze())

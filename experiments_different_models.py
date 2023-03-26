@@ -37,8 +37,8 @@ acc_glo_svm = 0
 acc_glo_for = 0
 
 # Get the data
-initial_training = pd.read_excel(r"data\Training_scrapped_with_industry.xlsx")
-initial_test = pd.read_excel(r"data\Test_scrapped_with_industry.xlsx")
+initial_training = pd.read_excel(r"data\training_scrapped_final.xlsx")
+initial_test = pd.read_excel(r"data\test_scrapped_final.xlsx")
 
 initial_training['Content'] = initial_training['Content'].astype('str')
 initial_training['Content'] = initial_training['Content'].apply(
@@ -60,7 +60,7 @@ test = initial_test[['Full_URL', 'Content', 'Industry']]
 stop_words = stopwords.words('english')
 
 # Get the created stop words list
-stop = pd.read_excel(r"data\STOP_WORDS.xlsx")
+stop = pd.read_excel(r"data\stop_words.xlsx")
 
 # Join the two lists and eliminate the duplicates
 stop_words = set(stop_words + stop['Words'].tolist())
