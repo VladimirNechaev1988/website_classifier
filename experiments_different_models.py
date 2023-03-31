@@ -11,9 +11,9 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
 
 # Create a finale table
-df = pd.DataFrame(columns=['Full_URL', 'True Industry', 'BOW_KNN', 'BOW_SVM', 'BOW_Forest', 'TFIDF_KNN', 'TFIDF_SVM',
-                           'TFIDF_Forest', 'W2V_KNN', 'W2V_SVM', 'W2V_Forest', 'GloVe_KNN', 'GloVe_SVM',
-                           'GloVe_Forest'])
+df = pd.DataFrame(
+    columns=['Full_URL', 'True Industry', 'BOW_KNN', 'BOW_SVM', 'BOW_Forest', 'TFIDF_KNN', 'TFIDF_SVM', 'TFIDF_Forest',
+             'W2V_KNN', 'W2V_SVM', 'W2V_Forest', 'GloVe_KNN', 'GloVe_SVM', 'GloVe_Forest'])
 
 # Load the pre-trained Word2Vec model
 model = api.load('word2vec-google-news-300')
@@ -41,11 +41,9 @@ initial_training = pd.read_excel(r"data\training_scrapped_final.xlsx")
 initial_test = pd.read_excel(r"data\test_scrapped_final.xlsx")
 
 initial_training['Content'] = initial_training['Content'].astype('str')
-initial_training['Content'] = initial_training['Content'].apply(
-    lambda x: ' ' + x)
+initial_training['Content'] = initial_training['Content'].apply(lambda x: ' ' + x)
 
-training = initial_training[['Content', 'Industry']] \
-    .groupby(by='Industry').sum()
+training = initial_training[['Content', 'Industry']].groupby(by='Industry').sum()
 
 initial_test['Content'] = initial_test['Content'].astype('str')
 initial_test['Content'] = initial_test['Content'].apply(lambda x: ' ' + x)
@@ -68,18 +66,15 @@ stop_words = set(stop_words + stop['Words'].tolist())
 # Create a word lemmatizer instance for pre-processing the texts
 wordnet_lemmatizer = WordNetLemmatizer()
 
-training['lists'] = training['Content'].apply(lambda t: [
-    wordnet_lemmatizer.lemmatize(t.lower()) for t in word_tokenize(t)
-    if t.isalpha() and t.lower() not in stop_words and len(t) >= 3
-])
+training['lists'] = training['Content'].apply(
+    lambda t: [wordnet_lemmatizer.lemmatize(t.lower()) for t in word_tokenize(t) if
+               t.isalpha() and t.lower() not in stop_words and len(t) >= 3])
 training['texts'] = training['lists'].apply(lambda t: ' '.join(t))
 training.drop(columns=['lists'], inplace=True)
 training.reset_index(inplace=True)
 
-test['lists'] = test['Content'].apply(lambda t: [
-    wordnet_lemmatizer.lemmatize(t.lower()) for t in word_tokenize(t)
-    if t.isalpha() and t.lower() not in stop_words and len(t) >= 3
-])
+test['lists'] = test['Content'].apply(lambda t: [wordnet_lemmatizer.lemmatize(t.lower()) for t in word_tokenize(t) if
+                                                 t.isalpha() and t.lower() not in stop_words and len(t) >= 3])
 test['texts'] = test['lists'].apply(lambda t: ' '.join(t))
 test.drop(columns=['lists'], inplace=True)
 
@@ -147,10 +142,7 @@ for index, row in test.iterrows():
     # ---------------------------------
 
     # Create a TF-IDF vectorizer and fit it to the training and test data
-    vectorizer = TfidfVectorizer(min_df=0.2,
-                                 max_df=5,
-                                 sublinear_tf=True,
-                                 use_idf=True)
+    vectorizer = TfidfVectorizer(min_df=0.2, max_df=5, sublinear_tf=True, use_idf=True)
     X_train_tfidf = vectorizer.fit_transform(X_train)
     X_test_tfidf = vectorizer.transform(X_test)
 
@@ -346,12 +338,9 @@ for index, row in test.iterrows():
     accuracy = accuracy_score(y_test_glove, y_pred_glove_knn)
     acc_glo_for += accuracy
 
-    df.loc[len(df)] = [
-        url, industry, y_pred_bow_knn[0], y_pred_bow_svm[0], y_pred_bow_forest[0], y_pred_tfidf_knn[0],
-        y_pred_tfidf_svm[0],
-        y_pred_tfidf_forest[0], y_pred_word2vec_knn[0], y_pred_word2vec_svm[0], y_pred_word2vec_forest[0],
-        y_pred_glove_knn[0], y_pred_glove_svm[0], y_pred_glove_forest[0]
-    ]
+    df.loc[len(df)] = [url, industry, y_pred_bow_knn[0], y_pred_bow_svm[0], y_pred_bow_forest[0], y_pred_tfidf_knn[0],
+                       y_pred_tfidf_svm[0], y_pred_tfidf_forest[0], y_pred_word2vec_knn[0], y_pred_word2vec_svm[0],
+                       y_pred_word2vec_forest[0], y_pred_glove_knn[0], y_pred_glove_svm[0], y_pred_glove_forest[0]]
     print(url, 'done')
 
 # df.to_excel(r"data\predictions_all_models.xlsx")

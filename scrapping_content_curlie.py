@@ -1,17 +1,18 @@
-import pandas as pd
-import requests
-from requests.exceptions import ConnectionError, Timeout, ContentDecodingError, InvalidURL, ConnectTimeout, \
-    TooManyRedirects, SSLError
-from bs4 import BeautifulSoup
-from langdetect import detect, LangDetectException
 import re
 import warnings
+
+import pandas as pd
+import requests
+from bs4 import BeautifulSoup
 from googletrans import Translator
+from langdetect import detect, LangDetectException
+from requests.exceptions import ConnectionError, Timeout, ContentDecodingError, InvalidURL, ConnectTimeout, \
+    TooManyRedirects, SSLError
 from tldextract import extract
 
 warnings.filterwarnings("ignore")
 translator = Translator()
-valid=''
+valid = ''
 
 df = pd.DataFrame(columns=['Full_URL', 'Domain', 'Content', 'Language'])
 

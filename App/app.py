@@ -1,16 +1,17 @@
-from flask import Flask, render_template, request
-from requests.exceptions import ConnectionError, Timeout, ContentDecodingError, InvalidURL, ConnectTimeout, \
-    TooManyRedirects
+import warnings
+
+import pandas as pd
 import requests
 from bs4 import BeautifulSoup
-from langdetect import detect, LangDetectException
+from flask import Flask, render_template, request
 from googletrans import Translator
-import pandas as pd
+from joblib import load
+from langdetect import detect, LangDetectException
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-from joblib import load
-import warnings
 from nltk.tokenize import word_tokenize
+from requests.exceptions import ConnectionError, Timeout, ContentDecodingError, InvalidURL, ConnectTimeout, \
+    TooManyRedirects
 
 warnings.filterwarnings("ignore")
 

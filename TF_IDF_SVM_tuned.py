@@ -1,13 +1,13 @@
+import time
+import warnings
+
 import pandas as pd
+from joblib import dump
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.svm import SVC
-import warnings
-import time
-from joblib import dump
-
 
 # Ignore the warnings
 warnings.filterwarnings("ignore")

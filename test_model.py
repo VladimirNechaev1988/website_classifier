@@ -1,11 +1,12 @@
+import time
+import warnings
+
 import pandas as pd
+from joblib import load
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.metrics import accuracy_score
-import warnings
-import time
-from joblib import load
 
 # Ignore the warnings
 warnings.filterwarnings("ignore")

@@ -1,13 +1,14 @@
+import time
+import warnings
+
 import pandas as pd
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.svm import SVC
-import warnings
-import time
 from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
+from sklearn.svm import SVC
 
 # Ignore the warnings
 warnings.filterwarnings("ignore")
@@ -29,17 +30,16 @@ stop_words = set(stop_words + stop['Words'].tolist())
 wordnet_lemmatizer = WordNetLemmatizer()
 
 # ---------------------------------
-# Get the training and test sets---
+# ------Get the training set-------
 # ---------------------------------
 
-initial_training = pd.read_excel(r"data\Training_scrapped_with_industry.xlsx ")
+train_grid = pd.read_excel(r"data\training_scrapped_final.xlsx ")
 
 # ---------------------------------
 # ---------Hyperparams-------------
 # ---------------------------------
 
 # Create a grid search training set and pre-process it in the same manner
-train_grid = initial_training
 train_grid['lists'] = train_grid['Content'].apply(lambda t: [
     wordnet_lemmatizer.lemmatize(t.lower()) for t in word_tokenize(t)
     if t.isalpha() and t.lower() not in stop_words and len(t) >= 3
