@@ -18,7 +18,7 @@ The model represents a website classifier that takes a URL as an input and outpu
 <li>Manufacturing</li>
 <li>Recycling</li>  
 
-The algorithm represents a Flask web service that is designed for further integration into a data mining tool, such as Talend Open Studio for processing large amounts of data, hence the simplistic design of the web service and output in JSON format.
+<br>The algorithm represents a Flask web service that is designed for further integration into a data mining tool, such as Talend Open Studio for processing large amounts of data, hence the simplistic design of the web service and output in JSON format.
 
 ## Development of the Model
 
