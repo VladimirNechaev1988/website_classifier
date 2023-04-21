@@ -96,5 +96,5 @@ This folder includes **3** downstream folders and a Python file:
 <li> <b>home_page</b>: the HTML template for the home page of the app which simply represents a header and an input field with a corresponding launch button.
 <li> <b>your_industry</b>: the HTML template for the endpoint route of the app.  
 
-  #### Script:
+##### Script:
 <li> <b>app</b>: the main Python script of the web service.
