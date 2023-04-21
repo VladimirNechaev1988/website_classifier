@@ -1,5 +1,5 @@
 # Website Classifier
-This repository contains a project of developing a website classification model. It includes the following stages:
+The project consists of the the following stages:
 <li> data collection </li> 
 <li> data pre-processing </li>
 <li> model selection </li>
