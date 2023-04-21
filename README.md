@@ -6,7 +6,7 @@ The project consists of the the following stages:
 <li> hyperparameter tuning </li> 
 <li> model deployment as a web service. </li>
 
-## Algorith Description
+## Algorithm Description
 
 The model represents a website classifier that takes a URL as an input and outputs a possible industry that the page belongs to. The following industries are considered in the model
 <li>Biotechnology</li>
