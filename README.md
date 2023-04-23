@@ -1,12 +1,12 @@
 # Website Classifier
-This repository contains a project of developing a website classification model. It includes the following stages:
+The project consists of the the following stages:
 <li> data collection </li> 
 <li> data pre-processing </li>
 <li> model selection </li>
 <li> hyperparameter tuning </li> 
 <li> model deployment as a web service. </li>
 
-## Algorith Description
+## Algorithm Description
 
 The model represents a website classifier that takes a URL as an input and outputs a possible industry that the page belongs to. The following industries are considered in the model
 <li>Biotechnology</li>
@@ -16,9 +16,9 @@ The model represents a website classifier that takes a URL as an input and outpu
 <li>Laboratory analytics and equipment</li>
 <li>Logistics </li>
 <li>Manufacturing</li>
-<li>Recycling</li>
+<li>Recycling</li>  
 
-The algorithm represents a Flask web service that is designed for further integration into a data mining tool, such as Talend Open Studio for processing large amounts of data, hence the simplistic design of the web service and output in JSON format.
+<br>The algorithm represents a Flask web service that is designed for further integration into a data mining tool, such as Talend Open Studio for processing large amounts of data, hence the simplistic design of the web service and output in JSON format.
 
 ## Development of the Model
 
@@ -33,22 +33,22 @@ Data preparation consisted of the following steps:
 <li>Tokenization</li>
 <li>Alpha filtering</li>
 <li>Lemmatization</li>
-<li>Stop words removal</li>
+<li>Stop words removal</li>  
 
-Feature engineering included the following techniques:
+<br>Feature engineering included the following techniques:
 
 <li>Bag-of-words</li>
 <li>TF-IDF</li>
 <li>Word2Vec</li>
-<li>GloVe</li>
+<li>GloVe</li>  
 
-Modeling was attempted using the following techniques:
+<br>Modeling was attempted using the following techniques:
 
 <li>KNN</li>
 <li>SVM</li>
-<li>Random Forests</li>
+<li>Random Forests</li>  
 
-6. The next step is selecting the best-performing model and tuning the parameters. Grid search is found in the <b>GridSearch</b> script where the proper parameters for the TF-IDF SVM algorithm were selected, which ultimately improved the model classification power.
+<br>6. The next step is selecting the best-performing model and tuning the parameters. Grid search is found in the <b>GridSearch</b> script where the proper parameters for the TF-IDF SVM algorithm were selected, which ultimately improved the model classification power.
 7. Deployment of the model as a web service. Scripts can be found in the app folder.
 8. The model was ultimately integrated into Talend Open Studio to work with large data amounts, such as CSV files, etc. The following steps were undertaken:
 <br>a) Creating a new job in Talend, inputting the tabular document containing URLs that require classification. 
@@ -94,6 +94,7 @@ This folder includes **3** downstream folders and a Python file:
 
 ##### Templates:
 <li> <b>home_page</b>: the HTML template for the home page of the app which simply represents a header and an input field with a corresponding launch button.
-<li> <b>your_industry</b>: the HTML template for the endpoint route of the app.
-#### Script:
+<li> <b>your_industry</b>: the HTML template for the endpoint route of the app.  
+
+##### Script:
 <li> <b>app</b>: the main Python script of the web service.
