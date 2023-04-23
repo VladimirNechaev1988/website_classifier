@@ -19,8 +19,7 @@ df = pd.DataFrame(
 model = api.load('word2vec-google-news-300')
 
 # Pretrained model for Glove
-model_name = 'glove-wiki-gigaword-200'
-word_vectors = api.load(model_name)
+word_vectors = api.load('glove-wiki-gigaword-200')
 
 # Cumulative accuracies
 acc_bow_knn = 0
@@ -41,9 +40,11 @@ initial_training = pd.read_excel(r"data\training_scrapped_final.xlsx")
 initial_test = pd.read_excel(r"data\test_scrapped_final.xlsx")
 
 initial_training['Content'] = initial_training['Content'].astype('str')
-initial_training['Content'] = initial_training['Content'].apply(lambda x: ' ' + x)
+initial_training['Content'] = initial_training['Content'].apply(
+    lambda x: ' ' + x)
 
-training = initial_training[['Content', 'Industry']].groupby(by='Industry').sum()
+training = initial_training[['Content', 'Industry']
+                            ].groupby(by='Industry').sum()
 
 initial_test['Content'] = initial_test['Content'].astype('str')
 initial_test['Content'] = initial_test['Content'].apply(lambda x: ' ' + x)
@@ -127,7 +128,8 @@ for index, row in test.iterrows():
     # Train random forest classifier
     n_estimators = 100  # number of trees in the forest
     max_depth = 10  # maximum depth of the tree
-    clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
+    clf = RandomForestClassifier(
+        n_estimators=n_estimators, max_depth=max_depth)
     clf.fit(X_train_bow, y_train)
 
     # Use the trained model to make predictions on the testing set
@@ -142,7 +144,8 @@ for index, row in test.iterrows():
     # ---------------------------------
 
     # Create a TF-IDF vectorizer and fit it to the training and test data
-    vectorizer = TfidfVectorizer(min_df=0.2, max_df=5, sublinear_tf=True, use_idf=True)
+    vectorizer = TfidfVectorizer(
+        min_df=0.2, max_df=5, sublinear_tf=True, use_idf=True)
     X_train_tfidf = vectorizer.fit_transform(X_train)
     X_test_tfidf = vectorizer.transform(X_test)
 
@@ -178,7 +181,8 @@ for index, row in test.iterrows():
     # Train random forest classifier
     n_estimators = 100  # number of trees in the forest
     max_depth = 10  # maximum depth of the tree
-    clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
+    clf = RandomForestClassifier(
+        n_estimators=n_estimators, max_depth=max_depth)
     clf.fit(X_train_tfidf, y_train)
 
     # Use the trained model to make predictions on the testing set
@@ -209,7 +213,6 @@ for index, row in test.iterrows():
         else:
             # Return a zero vector if no embeddings were found
             return np.zeros(model.vector_size)
-
 
     # Generate embeddings for each document in the training set
     X_train_embeddings = [generate_doc_embedding(doc) for doc in X_train]
@@ -248,7 +251,8 @@ for index, row in test.iterrows():
     # Train random forest classifier
     n_estimators = 100  # number of trees in the forest
     max_depth = 10  # maximum depth of the tree
-    clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
+    clf = RandomForestClassifier(
+        n_estimators=n_estimators, max_depth=max_depth)
     clf.fit(X_train_embeddings, y_train)
 
     # Use the trained model to make predictions on the testing set
@@ -328,7 +332,8 @@ for index, row in test.iterrows():
     # Train random forest classifier
     n_estimators = 100  # number of trees in the forest
     max_depth = 10  # maximum depth of the tree
-    clf = RandomForestClassifier(n_estimators=n_estimators, max_depth=max_depth)
+    clf = RandomForestClassifier(
+        n_estimators=n_estimators, max_depth=max_depth)
     clf.fit(X_train_flattened, y_train_glove)
 
     # Use the trained model to make predictions on the testing set
@@ -346,13 +351,19 @@ for index, row in test.iterrows():
 # df.to_excel(r"data\predictions_all_models.xlsx")
 print('The accuracy of BOW-KNN is:', round((acc_bow_knn / len(df)) * 100, 2))
 print('The accuracy of BOW-SVM is:', round((acc_bow_svm / len(df)) * 100, 2))
-print('The accuracy of BOW-Forest is:', round((acc_bow_for / len(df)) * 100, 2))
-print('The accuracy of TFIDF-KNN is:', round((acc_tfidf_knn / len(df)) * 100, 2))
-print('The accuracy of TFIDF-SVM is:', round((acc_tfidf_svm / len(df)) * 100, 2))
-print('The accuracy of TFIDF-Forest is:', round((acc_tfidf_for / len(df)) * 100, 2))
+print('The accuracy of BOW-Forest is:',
+      round((acc_bow_for / len(df)) * 100, 2))
+print('The accuracy of TFIDF-KNN is:',
+      round((acc_tfidf_knn / len(df)) * 100, 2))
+print('The accuracy of TFIDF-SVM is:',
+      round((acc_tfidf_svm / len(df)) * 100, 2))
+print('The accuracy of TFIDF-Forest is:',
+      round((acc_tfidf_for / len(df)) * 100, 2))
 print('The accuracy of W2V-KNN is:', round((acc_w2v_knn / len(df)) * 100, 2))
 print('The accuracy of W2V-SVM is:', round((acc_w2v_svm / len(df)) * 100, 2))
-print('The accuracy of W2V-Forest is:', round((acc_w2v_for / len(df)) * 100, 2))
+print('The accuracy of W2V-Forest is:',
+      round((acc_w2v_for / len(df)) * 100, 2))
 print('The accuracy of GloVe-KNN is:', round((acc_glo_knn / len(df)) * 100, 2))
 print('The accuracy of GloVe-SVM is:', round((acc_glo_svm / len(df)) * 100, 2))
-print('The accuracy of GloVe-Forest is:', round((acc_glo_for / len(df)) * 100, 2))
+print('The accuracy of GloVe-Forest is:',
+      round((acc_glo_for / len(df)) * 100, 2))
