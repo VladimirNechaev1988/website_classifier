@@ -67,7 +67,7 @@ Includes the following files:
 <li> <b>scrapping_content_curlie</b>: the web scrapping script. Uses Beautiful Soup to harvest the textual content from the websites from the URLs in files <b>URL_training</b> and <b>URL_test</b>.</li>
 <li> <b>test_model</b>: the Python script that opens the locally saved model and tests its efficiency on the testing set.</li>
 <li> <b>TF_IDF_SVM_tuned</b>: the Python script that creates a final SVM model with TF-IDF vectorizer and saves the model and the vectorizer in a joblib format.</li>
-<li> <b>requirements_model</b>: the textual service file that includes the list of Python libraries required to be installed in the local environment before proceeding to the scripts.</li>
+<li> <b>requirements_model</b>: the textual service file that includes the list of Python libraries required to be installed in the local environment before proceeding to the scripts by running the following command in the terminal: <b>pip install -r requirements.txt</b>.</li>
 
 ### Data
 The data folder includes 9 Excel files that were used either as primary data or were the output of the pre-processing and modelling algorithms (derived). These are the following data:
