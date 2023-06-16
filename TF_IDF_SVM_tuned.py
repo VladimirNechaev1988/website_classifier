@@ -94,4 +94,5 @@ end_time_prep = time.time()
 
 # Print the time required for the pre-processing
 elapsed_time_prep = end_time_prep - start_time_prep
-print(f"Elapsed time for pre-processing of {len(initial_training)} samples: {round(elapsed_time_prep, 2)} seconds")
+print(
+    f"Elapsed time for pre-processing of {len(initial_training)} samples: {round(elapsed_time_prep, 2)} seconds")

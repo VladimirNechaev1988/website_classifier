@@ -1,3 +1,4 @@
+import os
 import warnings
 
 import pandas as pd
@@ -6,19 +7,20 @@ from bs4 import BeautifulSoup
 from flask import Flask, render_template, request
 from googletrans import Translator
 from joblib import load
-from langdetect import detect, LangDetectException
+from langdetect import LangDetectException, detect
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-from requests.exceptions import ConnectionError, Timeout, ContentDecodingError, InvalidURL, ConnectTimeout, \
-    TooManyRedirects
+from requests.exceptions import (ConnectionError, ConnectTimeout,
+                                 ContentDecodingError, InvalidURL, Timeout,
+                                 TooManyRedirects)
 
 warnings.filterwarnings("ignore")
 
 wordnet_lemmatizer = WordNetLemmatizer()
 translator = Translator()
 
-stop = pd.read_excel(r"data\stop_words.xlsx")
+stop = pd.read_excel(os.path.join(os.getcwd(), "app", "data", "stop_words.xlsx"))
 stop_words = stopwords.words('english')
 stop_words = set(stop_words + stop['Words'].tolist())
 
@@ -26,14 +28,13 @@ stop_words = set(stop_words + stop['Words'].tolist())
 # ----Load the model from disk-----
 # ---------------------------------
 
-svm = load(r"data\model.joblib")
+svm = load(os.path.join(os.getcwd(), "app", "data", "model.joblib"))
 
 # ---------------------------------
 # ----Load TF-IDF vectorizer-------
 # ---------------------------------
 
-vectorizer = load(r"data\vectorizer.joblib")
-
+vectorizer = load(os.path.join(os.getcwd(), "app", "data", "vectorizer.joblib"))
 # Create a Flask app
 app = Flask(__name__)
 
@@ -41,18 +42,21 @@ app = Flask(__name__)
 # Define a route for the web service
 @app.route('/')
 def home():
+    '''Renders the template for the homepage'''
     return render_template('home_page.html')
 
 
 @app.route('/your_industry', methods=['GET', 'POST'])
 def classify():
+    '''The classifier itself'''
     if request.method == 'POST':
         input_url = request.form['url']
 
     elif request.method == 'GET':
         input_url = request.args.get('url')
     try:
-        requests.get(input_url, timeout=10, headers={'Connection': 'close'})  # specify timeout
+        requests.get(input_url, timeout=10, headers={
+                     'Connection': 'close'})  # specify timeout
         valid = 'yes'
     except (ConnectionError, Timeout, ContentDecodingError, InvalidURL, ConnectTimeout, TooManyRedirects,
             ConnectionResetError):
@@ -60,7 +64,7 @@ def classify():
 
     if valid == 'yes':
 
-        r = requests.get(input_url)
+        r = requests.get(input_url, timeout=10)
         text = r.text
         soup = BeautifulSoup(text)
 
