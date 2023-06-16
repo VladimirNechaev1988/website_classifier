@@ -4,7 +4,8 @@ The project consists of the following stages:
 *  data pre-processing   
 *  model selection   
 *  hyperparameter tuning    
-*  model deployment as a web service.   
+*  model deployment as a web service  
+* integration into a data mining tool.     
 
 ## Algorithm Description
 
@@ -24,10 +25,10 @@ The algorithm represents a Flask web service that is designed for further integr
 
 The development included the following steps:
 1. **Data collection**. To collect the data for training and testing, the portal *curlie.org* was used. This is a man-made data pool and search engine which includes a hierarchical directory of websites organized by topic, with each site categorized under a relevant subject. With a search tool on the main page, a desired category was selected, and the output represented a list of web pages from this industry. The URLs of the resulting websites were extracted from the portal. For each industry, 150 websites were selected for use in both training and testing sets. They were organized in a tabular form, resulting in a total of 1200 websites in the collection. 
-2. **Training and test**. Next, the dataset of URLs was randomly partitioned into training and testing sets with stratification to ensure equal classes proportion. This resulted in 135 URLs per industry for training and 15 for testing.
-3. **Scrapping**. After the data sets were ready, each URL was checked for validity and the textual information was scrapped from the home pages of each website if that was possible. This step is represented in the **scrapping_content_curlie** script using **URL_training** and **URL_test** data sets. The results are saved in **training_scrapped_init** and **test_scrapped_init**. 
+2. **Training and test sets preparation**. Next, the dataset of URLs was randomly partitioned into training and testing sets with stratification to ensure equal classes proportion. This resulted in 135 URLs per industry for training and 15 for testing.
+3. **Scrapping the websites**. After the data sets were ready, each URL was checked for validity and the textual information was scrapped from the home pages of each website if that was possible. This step is represented in the **scrapping_content_curlie** script using **URL_training** and **URL_test** data sets. The results are saved in **training_scrapped_init** and **test_scrapped_init**. 
 4. **Quality check**. To ensure consistency and quality, scrapped texts were checked for quality. Those websites that were unavailable, output too little information, or prohibited scrapping, were excluded from the sets. This resulted in 885 URLs for training and 101 for testing. They are saved in **training_scrapped_final** and **test_scrapped_final** sets.
-5. **Data preparation and modeling**. Data cleaning and preparation can be viewed in the **experiments_with_different_models** script.
+5. **Data processing and modeling**. Data cleaning and preparation can be viewed in the **experiments_with_different_models** script.
 
     **Data preparation** consisted of the following steps:
     * Tokenization
